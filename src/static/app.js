@@ -45,7 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <p><strong>Schedule:</strong> ${details.schedule}</p>
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
           ${participantsHTML}
-        `;
+                      ${details.participants.map(email => `<li>${email}</li>`).join("")}
+                      <span style="cursor: pointer; color: #c00;" onclick="unregisterParticipant('${email}')">&#128465;</span>
 
         activitiesList.appendChild(activityCard);
 
@@ -82,6 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
         messageDiv.textContent = result.message;
         messageDiv.className = "success";
         signupForm.reset();
+        fetchActivities(); // Refresh activities list after successful registration
       } else {
         messageDiv.textContent = result.detail || "An error occurred";
         messageDiv.className = "error";
